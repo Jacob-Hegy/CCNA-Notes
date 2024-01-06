@@ -1,0 +1,23 @@
+Native VLAN
+	Setting native VLAN to an unused VLAN is best practice
+	Frames are untagged (allows for faster traffic flow due to smaller packets)
+	2 Config Methods
+		1. encapsulation dot1q vlan-id native
+		2. vlan-id native
+
+Layer 3 Switch (Multilayer Switch)
+	Capable of both switching and routing
+		Sees both MAC addresses and IP addresses
+	You can assign IP address to its interfaces
+	Capable of making virtual interfaces for each VLAN & assign them IP addresses
+	You can configure routes on it like a router
+	Capable of inter-VLAN routing
+	Switch Virtual Interfaces (SVIs)
+		Virtual interfaces you can assign IP addresses to in a multilayer switch
+		Configure each PC to ues the SVI as their gateway, not the router
+		The PCs will send traffic to the switch and the switch will route it to the appropriate VLAN
+		Set a default route to the router so that any traffic destined for outside the network will go to the router
+		interface x - allows you to create an SVI on the VLAN x
+	USE THE COMMAND ip routing TO ENABLE A SWITCH AS A LAYER 3 SWITCH
+	USE no switchport ON AN INTERFACE TO CONFIGURE IT AS A ROUTED PORT (enables Layer 3)
+	Command ip route 0.0.0.0 0.0.0.0 x sets it so that the default route is set to IP address x	

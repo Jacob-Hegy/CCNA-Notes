@@ -1,0 +1,39 @@
+NOTE: IP is connectionless, so packets can take branching paths to reach their destination
+
+TCP & UDP
+	Layer 4 (Transport)
+	Socket = combination of IP address of host, port, and transport protocol (either TCP or UDP)
+	Allow for session multiplexing (allows a single host to communicate with multiple foreign hosts simultaneously)
+
+TCP Header
+	16 bit source port | 16 bit destination port
+	32 bit sequence number (sequence # = seq# + 1 if SYN flag is set)
+	32 bit acknowledgement number (expected acknowledgement response)
+	Header length | Reserved (set to 0) | flags | Window Size (# of bytes receiver is currently willing to receive)
+	16 bit TCP checksum | 16 bit urgent point (indicates offset since last URG packet)
+	Options
+	Data (data from higher layer protocols)
+
+	Flags
+		CWR: indicates network congestion
+		URG: process packet asap
+		ACK: acknowledgement of packet
+
+Layer 3 uses a protocol # to determine what Layer 4 protocol is being used
+Layer 4 uses a port # to determine what Layer 7 protocol is in use
+
+Window Size = # of packets that can be received until an ACK is received in return
+	Higher window size can increase throughput
+	Typically window size uses a sliding scale (start small and exponentially increase to determine what the network/receiver can reliably handle)
+	Example: Window Size = 3
+		PC1 sends packets 1, 2, and 3, then PC2 sends an acknowledgement for 4 (send an ACK for the next packet you expect)
+		PC1 then snds packets 4, 5, and 6, then PC2 sends an acknowledgement for 7
+	Example 2: Window Size = 3, WRED is enabled
+		PC1 sends packets 1, 2, and 3, but 3 is dropped. Then PC2 sends an acknowledgement for 3 and requests a window size of 2
+		PC1 retransmits packet 3 as well as packet 4 as well as a request for a window size of 3. Then PC2 sends an ACK for 6 and accepts the new window size
+
+Sequence and Acknowledgement Numbers
+	At the start of a TCP session, the clients both pick a random 32 bit sequence number
+	The initiating host sends its seq number in its SYN packet as well as an ACK of 0
+	The responding host sends its own seq number in the SYN/ACK as well as an ACK equal to the other host's seq + 1
+	The initiating host finally responds with ACK containing the its own seq # and an ACk equal to the responding host's seq + 1

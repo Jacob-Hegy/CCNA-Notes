@@ -1,0 +1,58 @@
+Trunk Port
+	Carries traffic for multiple VLANs over a shared interface
+	Distinguishes VLANs based on "tags"
+		Trunk ports = "tagged" ports
+		Access ports = "untagged" ports
+		Uses ISL (Inter-Switch Link) and IEEE 802.1Q (dot1q)
+			ISL is rarely used, 802.1Q deprecated it
+		Ethernet Header
+			Preamble | SFD | Destination | Source | 802.1Q Tag | Type
+			Tag consists of Tag Protocol Identifier (TPID) and Tag Control Information (TCI)
+			TPID
+				16 bits
+				Set to a value of 0x8100 (corresponds to 802.1Q)
+			TCI
+				Priority Code Point (PCP)
+					3 bits
+					Used for QoS
+				Drop Eligible Indicator (DEI)
+					1 bit
+					Indicates if a frame can be dropped if the network is congested
+				VLAN ID (VID)
+					12 bits
+					Identifies the VLAN the frame belongs to
+					VLANs 1 - 4094 can be used (0 and 4095 are reserved)
+
+VLAN Ranges
+	Normal VLANs: 1 - 1005
+	Extended VLANs: 1006 - 4094
+		All switches support normal VLANs, but some older switches don't support extended VLANs
+
+Native VLAN
+	Feature of 802.1Q
+	Must be configured on each trunk port manually
+	Defaults to VLAN 1
+	Frames in the native VLAN don't have 802.1Q tags
+		If a switch receives an untagged frame, it assumes it's a part of the native VLAN
+
+Configuring a Trunk Port
+	In conf t and selecting an interface...
+		switchport mode trunk
+			Might have to use switchport trunk encapsulation dot1q THEN switchport mode trunk on switches that support ISL
+		show interfaces trunk
+		To configure VLANs allowed on trunk
+			switchport trunk allowed vlan x,y,...,z
+			switchport trunk allowed vlan add _
+			switchport trunk allowed vlan remove _
+			switchport trunk allowd vlan all
+			switchport trunk allowed vlan except _
+			switchport trunk allowed vlan none
+		To switch the native VLAN
+			switchport trunk native vlan x
+				Sets native VLAN to VLAN x
+
+Router on a Stick (ROAS)
+	A configuration where there's only 1 physical interface connecting the router and switch
+		Functions by creating sub-interfaces
+		Created with interface *interface*.*sub-interface*
+		Configure encapsulation as well as IP address and subnet mask of sub-interface

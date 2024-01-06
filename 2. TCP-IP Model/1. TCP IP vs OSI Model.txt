@@ -1,0 +1,22 @@
+        OSI                 TCP/IP    
+|-----------------|   |-----------------|
+|7. Application   |   |                 |
+|-----------------|   |                 |
+|6. Presentation  |   |5-7. Application |
+|-----------------|   |                 |
+|5. Session       |   |                 |
+|-----------------|   |-----------------|
+|4. Transport     |   |4. Transport     |
+|-----------------|   |-----------------|
+|3. Network       |   |3. Network       |
+|-----------------|   |-----------------|
+|2. Data Link     |   |2. Data Link     |
+|-----------------|   |-----------------|
+|1. Physical      |   |1. Physical      |
+|-----------------|   |-----------------|
+
+5 Layer TCP/IP Model is generally regarded as more relevant than the 7 Layer OSI Model
+Layer 4 PDU (protocol date unit) = segments; Layer 4 uses ports
+Layer 3 PDU = packets; Layer 3 uses IP addresses
+Layer 2 PDU = frames; Layer 2 uses MAC addresses
+Layer 1 uses bits

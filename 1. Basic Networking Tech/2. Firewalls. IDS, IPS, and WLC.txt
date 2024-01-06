@@ -1,0 +1,8 @@
+Firewalls:
+	Typically sit behind access point so ISP can manage access point
+Wireless LAN Controller (WLC):
+	Manages access points across a LAN by connecting APs to the WLC
+Next-Gen Firewalls:
+	Support IDS/IPS
+		IDS: typically out-of-band and use port-mirroring
+		IPS: typically sit in-band and all traffic goes through them

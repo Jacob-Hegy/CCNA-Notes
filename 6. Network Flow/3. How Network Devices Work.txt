@@ -1,0 +1,66 @@
+Hub
+	Layer 1 device
+	CAT5 unshielded twisted pair cable with RJ45 connector for connecting PC to hub
+	Very similar to how wireless networks work
+	Nonintelligent & does not understand the frames being sent through it
+		Essentially a multiport repeater
+		Receives data and sends it out of all other ports
+		Phyiscal topology: Star (central device [the hub] with devices hanging off the hub as spokes [the PCs]; all traffic flows through the central point when communicating between endpoints)
+			Good for availability even in the face of a cable break
+			Can extend to further distances easily by incorporating signal repeaters
+	A hub receives traffic, then amplifies the traffic and sends it to all ports except for the one it received it on (relies on the NICs of the PCs to recognize when a frame is destined for them based on MAC addresses)
+	Logical topology: Bus (single collision domain) because all broadcasts are received by everyone (single broadcast domain)
+
+Bridge
+	Layer 2 device
+	Has a MAC address table to locate devices in topology (CAM table)
+	Phyiscal & Logical topology: Star
+	Performing processing in software (slower than switches)
+	Receives a frame, checks the MAC table (noting down the source MAC on the port the frame came from)
+		If it has the dest MAC in its table, it sends the traffic on that port
+		Else it sends the frame to through all ports except the one it was received on
+	A collision on any given port doesn't affect the other ports (each port is its own collision domain)
+	Single Broadcast Domain (all devices will receive a broadcast on the network)
+	Limited # of ports compared to switches
+	Replaced by switches
+
+Switch
+	Layer 2 device
+	Uses hardware for processing with ASICs (application specific integrated circuits)
+	Phyiscal & Logical topology: Star
+	Does not solve bridge problems, but they're encountered
+	Each port is a separate collision domain
+	Single Broadcast Domain
+	Advantages:
+		Support many more ports than bridges
+		WAY faster than software processing, moving traffic at wire speed (as if the switch wasn't even there)
+		Bandwidth is not split up between ports (no throughput degradation)
+
+Half Duplex
+	Only one party can transmit at any given time
+	Hubs (CSMA/CD)
+
+Full Duplex
+	Both parties can transmit and receive at the same time
+	Switches can use full duplex (DISABLES COLLISION DETECTION)
+	Effectively double throughput, but risks collisions
+	If one device choose full duplex and the other chooses half duplex, this will cause degraded throughput
+
+Either configure both sides manually or set them both to auto-negotiation to avoid duplex mismatches
+	Use command duplex x and speed x [Mbps]
+
+Router
+	Layer 3 device
+	Use IP addresses to decide what interface to transmit out of
+		Can have serial interfaces and ethernet interfaces (would use MAC addresses)
+	Maintains a routing table of IP addresses (use NETWORK addresses, not individual IP addresses)
+	Don't forward broadcasts
+	Routing Between Subnets
+		1. PC checks if the IP address its trying to communicate with is in the same subnet
+		2. Assuming it isn't, traffic is sent to the default gateway
+			The source IP & MAC are the source PC, the destination IP is set for the remote computer, BUT the source MAC address is set to the router
+		3. Router strips layer 2 headers, then routing table is consulted to determine the subnet with the correct remote host
+		4. Router forwards traffic to appropriate subnet
+			If the router does not have the MAC address for the remote host, an ARP broadcast is sent out to get it
+		5. Once the router has the MAC address for the remote host, the traffic is finally forwarded
+			Has the same layer 3 info, but layer 2 is rewritten so the source MAC is the router and the dest MAC is the remote host

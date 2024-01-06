@@ -1,0 +1,15 @@
+Used to logically separate hosts on Layer 2
+Configured on switch interfaces
+Switches won't forward traffic directly between hosts in different VLANs
+
+show vlan brief shows the VLANs that exist on a switch
+
+Configuring VLAN on an interfaces
+	1. Select interfaces
+	2. switchport mode access [sets port to an access port]
+	3. switchport access vlan x [sets interface to be a part of vlan x]
+		If a VLAN does not already exist, its created when a switchport is set to it
+
+vlan x
+	Command to both create VLAN x and access it
+	Use name x to set the VLAN name to x

@@ -1,0 +1,12 @@
+Repeater:
+	Receives an ethernet signal and repeats it (prevents signal from dying off at longer distances)
+Hub (Layer 1):
+	Receives an ethernet signal and repeats it through a bunch of ports
+Switch (Layer 2):
+	Receives network traffic and actually reads the ethernet (layer 2) frames to intelligently route the traffic to the correct endpoint
+	A layer 3 switch is a switch with routing capability (uses IP addresses to route between VLANs/subnets)
+Bridge:
+	Intermediate device between hub and switch (learned MAC address location with software while switches use hardware ASICs [application specific integrated circuits])
+Router (Layer 3):
+	Routes traffic from one network to another (think ethernet to IP and back again)
+		Example: home router connects our home network (LAN) to the internet (WAN)
