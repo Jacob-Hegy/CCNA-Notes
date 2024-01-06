@@ -1,7 +1,7 @@
 # VTP Lab
 
 ## Table of Contents
-  * [Part 1](#Part%201)
+  * [Part 1](#part-1)
 
 ## Intro
 The premise of the lab is as follows:
